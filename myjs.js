@@ -6,9 +6,9 @@ let nameInput = document.querySelector('.name')
 
 callButton.addEventListener('click', function() {
     let name = nameInput.value
-    let math = markMathInput.value
-    let sience = markSienceInput.value
-    let literature = markLiteratureInput.value
+    let math = Number(markMathInput.value)
+    let sience = Number(markSienceInput.value)
+    let literature = Number(markLiteratureInput.value)
     let markAverage = ((math + sience + literature) / 3)
     if (math < 0 || sience < 0 || literature < 0 || math > 10 || sience > 10 || literature > 10)
     alert('Input Illegal')
