@@ -3,3 +3,20 @@ body {
     margin: 0 auto;
     background-color: #7ee783;
 }
+header {
+    font-size: 50px;
+    text-align: center;
+    color: blue;
+    padding-bottom: 40px;
+}
+h1 {
+    padding-bottom: 20px;
+}
+main {
+    border: 1px solid sienna;
+    border-radius: 25px;
+    padding: 10px 20px 20px 20px;
+}
+.form div{
+    padding-bottom: 10px;
+}

@@ -1,17 +1,18 @@
 let callButton = document.querySelector('.call');
 let markInput = document.querySelector('.mark');
-
+let nameInput = document.querySelector('.name')
 
 callButton.addEventListener('click', function() {
-    let mark = markInput.value
+    let name = nameInput.value;
+    let mark = markInput.value;
     if (mark < 0 || mark > 10)
     alert('Input Illegal')
     else if (mark < 5)
-    alert('Weak Student')
+    alert(name + ' is a weak student')
     else if (mark < 6.5)
-    alert('Average Student')
+    alert(name + ' is an average student')
     else if (mark < 8)
-    alert('Good Student')
+    alert(name + ' is a good student')
     else
-    alert('Excellent Student')
+    alert(name + 'is an excellent student')
 })
