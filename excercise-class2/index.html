@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Exercise 2</title>
+</head>
+
+<body>
+    <style>
+        body {
+            background-color: antiquewhite;
+        }
+
+        header {
+            font-size: 64px;
+            text-align: center;
+            color: blue;
+        }
+
+        input {
+            width: 300px;
+        }
+
+        label {
+            display: inline-block;
+            width: 200px;
+        }
+
+        .button {
+            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .calculate {
+            width: 200px;
+            height: 50px;
+            background-color: red;
+            border: none;
+        }
+
+        .form {
+            width: 500px;
+            height: auto;
+            line-height: 30px;
+            margin: 0 auto;
+        }
+
+        .nameOutput,
+        .years {
+            font-weight: bold;
+        }
+    </style>
+    <header>Excercise 2</header>
+    <main>
+        <div class="form">
+            <label for="name">Input Name</label>
+            <input type="text" name="" id="name" class="name"><br>
+            <label for="birthYear">Input Your Year of birth</label>
+            <input type="datetime" name="" id="birthYear" class="birthYear"><br>
+            <label for="gender">Select your Gender</label>
+            <select name="gender" id="gender" class="gender">
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select><br>
+        </div>
+        <div class="button">
+            <button class="calculate">Call Result</button>
+        </div>
+        <hr>
+        <p>The result of <span class="nameOutput"></span></p>
+        <span>Number of years left until retirement: <span class="years"></span> years</span>
+
+    </main>
+    <script>
+        const nameInput = document.querySelector('.name')
+        const birthYearInput = document.querySelector('.birthYear')
+        const genderInput = document.querySelector('.gender')
+        const calculateButton = document.querySelector('.calculate')
+
+        const calculateYearLeftRetire = gender => {
+            let yearLeft = 0
+            const yearNow = (new Date()).getFullYear()
+            const birthYear = birthYearInput.value
+            const yearOlds = (yearNow - birthYear)
+            if (gender === 'male')
+                yearLeft = (65 - yearOlds)
+            else
+                yearLeft = (60 - yearOlds)
+
+            if (yearLeft < 0) yearLeft = 0
+
+            return yearLeft
+        }
+        calculateButton.addEventListener('click', function () {
+
+            const name = nameInput.value
+            const birthYear = birthYearInput.value
+
+            if (name === '' || birthYear === '') {
+                alert('Empty input, please fill in')
+            }
+
+            const yearNow = (new Date()).getFullYear()
+            if (birthYear < 1800 || birthYear > yearNow) { alert('Invalid Year, please recheck') }
+
+
+            const gender = genderInput.value
+            document.querySelector('.nameOutput').innerHTML = name
+            document.querySelector('.years').innerHTML = calculateYearLeftRetire(gender)
+        })
+    </script>
+</body>
+
+</html>
