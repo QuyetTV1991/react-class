@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Excercise 2</title>
+  </head>
+  <body>
+    <header>Excercise 2</header>
+    <main>
+      <label for="name">Input Your Name</label>
+      <input type="text" name="" id="name" class="name" />
+      <label for="birthYear">Input Your Year of Birth</label>
+      <input type="text" name="" id="birthYear" />
+      <button class="calculate">Call Result</button>
+      <hr />
+      <p class="">
+        Hello <span class="nameOutput"></span> ,your animal designation is:
+        <span class="YearOldOutput"></span>
+      </p>
+      <script>
+        const nameInput = document.querySelector(".name");
+        const birthYearInput = document.querySelector(".birthYear");
+        const calculateButton = document.querySelector("calculate");
+
+        const calculateYearOld = birthYear => {
+          const yearNow = new Date().getFullYear();
+          let yearOld = yearNow - birthYear;
+
+          return yearOld;
+        };
+
+        const calculateAnimalDesignation = birthYear => {
+          let can = [
+            "Canh",
+            "Tan",
+            "Nham",
+            "Quy",
+            "Giap",
+            "At",
+            "Binh",
+            "Dinh",
+            "Mau",
+            "Ky"
+          ];
+          let chi = {
+            array0: [
+              "Than",
+              "Dau",
+              "Tuat",
+              "Hoi",
+              "Ti",
+              "Suu",
+              "Dan",
+              "Mao",
+              "Thin",
+              "Ty",
+              "Ngo",
+              "Mui"
+            ],
+            array1: [
+              "Ty",
+              "Suu",
+              "Dan",
+              "Mao",
+              "Thin",
+              "Ty",
+              "Ngo",
+              "Mui",
+              "Than",
+              "Dau",
+              "Tuat",
+              "Hoi"
+            ],
+            array2: [
+              "Thin",
+              "Ty",
+              "Ngo",
+              "Mui",
+              "Than",
+              "Dau",
+              "Tuat",
+              "Hoi",
+              "Ty",
+              "Suu",
+              "Dan",
+              "Mao"
+            ]
+          };
+          let findCan = can[Number(birthYear.subtr(4, 1))];
+
+          let arrayX = Number(birthYear.subtr(1, 2)) % 3;
+          if ((arrayX = 0)) {
+            arraySelect = array0;
+          } else if ((arrayX = 1)) {
+            arraySelect = array1;
+          } else {
+            arraySelect = array2;
+          }
+
+          let findChi = arraySelect[Number(birthYear.subtr(3, 2)) % 12];
+
+          let canchi = can + " " + chi;
+        };
+        calculateButton.addEventListener("click", function() {
+          const birthYear = birthYearInput.value;
+          const name = nameInput.value;
+
+          if ((name === "") | (birthYear === "")) {
+            alert("Empty input, please fill");
+          }
+
+          const yearNow = new Date().getFullYear();
+          if (birthYear < 1900 || birthYear > yearNow) {
+            alert("Invalid Year, please recheck");
+          }
+
+          document.querySelector("nameOutput").innerHTML = calculateYearOld(
+            birthYear
+          );
+          document.querySelector(
+            "yearOldOutput"
+          ).innerHTML = calculateAnimalDesignation(birthYear);
+        });
+      </script>
+    </main>
+  </body>
+</html>
