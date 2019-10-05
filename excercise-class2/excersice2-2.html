@@ -1,129 +1,189 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Excercise 2</title>
-  </head>
-  <body>
-    <header>Excercise 2</header>
-    <main>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Excercise 2</title>
+</head>
+
+<body>
+  <style>
+    body {
+      background-color: antiquewhite;
+    }
+
+    header {
+      font-size: 64px;
+      text-align: center;
+      color: blue;
+    }
+
+    input {
+      width: 300px;
+    }
+
+    label {
+      display: inline-block;
+      width: 200px;
+    }
+
+    .button {
+      margin-top: 50px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .calculate {
+      width: 200px;
+      height: 50px;
+      background-color: red;
+      border: none;
+    }
+
+    .form {
+      width: 500px;
+      height: auto;
+      line-height: 30px;
+      margin: 0 auto;
+    }
+
+    .nameOutput,
+    .yearOldOutput,
+    .animalDesignationOutput {
+      font-weight: bold;
+    }
+  </style>
+  <header>Excercise 2</header>
+  <main>
+    <div class="form">
       <label for="name">Input Your Name</label>
-      <input type="text" name="" id="name" class="name" />
+      <input type="text" name="" id="name" class="name" /><br>
       <label for="birthYear">Input Your Year of Birth</label>
-      <input type="text" name="" id="birthYear" />
+      <input type="text" name="" id="birthYear" class="birthYear" /><br>
+    </div>
+    <div class="button">
       <button class="calculate">Call Result</button>
-      <hr />
-      <p class="">
-        Hello <span class="nameOutput"></span> ,your animal designation is:
-        <span class="YearOldOutput"></span>
-      </p>
-      <script>
-        const nameInput = document.querySelector(".name");
-        const birthYearInput = document.querySelector(".birthYear");
-        const calculateButton = document.querySelector("calculate");
+    </div>
+    <hr />
+    <p class="">
+      Hello <span class="nameOutput"></span>, your age is <span class="yearOldOutput"></span> ,your animal designation
+      is:
+      <span class="animalDesignationOutput"></span>
+    </p>
+    <script>
+      const nameInput = document.querySelector(".name");
+      const birthYearInput = document.querySelector(".birthYear");
+      const calculateButton = document.querySelector(".calculate");
 
-        const calculateYearOld = birthYear => {
-          const yearNow = new Date().getFullYear();
-          let yearOld = yearNow - birthYear;
+      const calculateYearOld = birthYear => {
+        const yearNow = new Date().getFullYear();
+        let yearOld = (yearNow - birthYear);
 
-          return yearOld;
+        return yearOld;
+      };
+
+      const calculateAnimalDesignation = birthYear => {
+        let a = birthYear.substr(3, 1)
+        let can = [
+          "Canh",
+          "Tan",
+          "Nham",
+          "Quy",
+          "Giap",
+          "At",
+          "Binh",
+          "Dinh",
+          "Mau",
+          "Ky"
+        ];
+        let chi = {
+          array0: [
+            "Than",
+            "Dau",
+            "Tuat",
+            "Hoi",
+            "Ti",
+            "Suu",
+            "Dan",
+            "Mao",
+            "Thin",
+            "Ty",
+            "Ngo",
+            "Mui"
+          ],
+          array1: [
+            "Ty",
+            "Suu",
+            "Dan",
+            "Mao",
+            "Thin",
+            "Ty",
+            "Ngo",
+            "Mui",
+            "Than",
+            "Dau",
+            "Tuat",
+            "Hoi"
+          ],
+          array2: [
+            "Thin",
+            "Ty",
+            "Ngo",
+            "Mui",
+            "Than",
+            "Dau",
+            "Tuat",
+            "Hoi",
+            "Ty",
+            "Suu",
+            "Dan",
+            "Mao"
+          ]
         };
+        let findCan = can[a];
 
-        const calculateAnimalDesignation = birthYear => {
-          let can = [
-            "Canh",
-            "Tan",
-            "Nham",
-            "Quy",
-            "Giap",
-            "At",
-            "Binh",
-            "Dinh",
-            "Mau",
-            "Ky"
-          ];
-          let chi = {
-            array0: [
-              "Than",
-              "Dau",
-              "Tuat",
-              "Hoi",
-              "Ti",
-              "Suu",
-              "Dan",
-              "Mao",
-              "Thin",
-              "Ty",
-              "Ngo",
-              "Mui"
-            ],
-            array1: [
-              "Ty",
-              "Suu",
-              "Dan",
-              "Mao",
-              "Thin",
-              "Ty",
-              "Ngo",
-              "Mui",
-              "Than",
-              "Dau",
-              "Tuat",
-              "Hoi"
-            ],
-            array2: [
-              "Thin",
-              "Ty",
-              "Ngo",
-              "Mui",
-              "Than",
-              "Dau",
-              "Tuat",
-              "Hoi",
-              "Ty",
-              "Suu",
-              "Dan",
-              "Mao"
-            ]
-          };
-          let findCan = can[Number(birthYear.subtr(4, 1))];
+        let arraySelect = 0
+        let x = ((birthYear.substr(0, 2)) % 3);
+        if ((x = 0)) {
+          chi.arraySelect = chi.array0;
+        } else if ((x = 1)) {
+          chi.arraySelect = chi.array1;
+        } else {
+          chi.arraySelect = chi.array2;
+        }
 
-          let arrayX = Number(birthYear.subtr(1, 2)) % 3;
-          if ((arrayX = 0)) {
-            arraySelect = array0;
-          } else if ((arrayX = 1)) {
-            arraySelect = array1;
-          } else {
-            arraySelect = array2;
-          }
+        let b = ((birthYear.substr(2, 2)) % 12)
+        let findChi = chi.arraySelect[b];
 
-          let findChi = arraySelect[Number(birthYear.subtr(3, 2)) % 12];
+        let canchi = findCan + " " + findChi;
 
-          let canchi = can + " " + chi;
-        };
-        calculateButton.addEventListener("click", function() {
-          const birthYear = birthYearInput.value;
-          const name = nameInput.value;
+        return canchi
+      };
+      calculateButton.addEventListener("click", function () {
+        const birthYear = birthYearInput.value;
+        const name = nameInput.value;
 
-          if ((name === "") | (birthYear === "")) {
-            alert("Empty input, please fill");
-          }
+        if ((name === "") | (birthYear === "")) {
+          alert("Empty input, please fill");
+        }
 
-          const yearNow = new Date().getFullYear();
-          if (birthYear < 1900 || birthYear > yearNow) {
-            alert("Invalid Year, please recheck");
-          }
+        const yearNow = new Date().getFullYear();
+        if (birthYear < 1900 || birthYear > yearNow) {
+          alert("Invalid Year, please recheck");
+        }
 
-          document.querySelector("nameOutput").innerHTML = calculateYearOld(
-            birthYear
-          );
-          document.querySelector(
-            "yearOldOutput"
-          ).innerHTML = calculateAnimalDesignation(birthYear);
-        });
-      </script>
-    </main>
-  </body>
+        document.querySelector(".nameOutput").innerHTML = name
+        document.querySelector(".yearOldOutput").innerHTML = calculateYearOld(
+          birthYear
+        );
+        document.querySelector(
+          ".animalDesignationOutput"
+        ).innerHTML = calculateAnimalDesignation(birthYear);
+      });
+    </script>
+  </main>
+</body>
+
 </html>
