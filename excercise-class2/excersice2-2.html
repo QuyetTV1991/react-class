@@ -85,7 +85,6 @@
       };
 
       const calculateAnimalDesignation = birthYear => {
-        let a = birthYear.substr(3, 1)
         let can = [
           "Canh",
           "Tan",
@@ -142,8 +141,13 @@
             "Mao"
           ]
         };
+        // declare a to find index inside array "can"
+        // the last number in year will show the "can"
+        let a = birthYear.substr(3, 1)
         let findCan = can[a];
 
+        // declare arraySelect to find array inside object "chi"
+        // the result of first 2 digits module with 3 will show the arraySelect
         let arraySelect = 0
         let x = ((birthYear.substr(0, 2)) % 3);
         if ((x = 0)) {
@@ -154,6 +158,8 @@
           chi.arraySelect = chi.array2;
         }
 
+        // declare b to find index inside arraySelect, which found above code
+        // the result of last 2 digits module with 12 will show the index inside arraySelect
         let b = ((birthYear.substr(2, 2)) % 12)
         let findChi = chi.arraySelect[b];
 
