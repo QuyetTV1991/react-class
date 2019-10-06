@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let productArr = [
+        {
+          name: "abc",
+          price: "100",
+          description: "mo ta",
+          image:
+            "https://static.giantbomb.com/uploads/original/12/127694/2142029-yuna_ffx.jpg"
+        },
+        {
+          name: "abc 2",
+          price: "100",
+          description: "mo ta",
+          image:
+            "https://static.giantbomb.com/uploads/original/12/127694/2142029-yuna_ffx.jpg"
+        },
+        {
+          name: "abc 3",
+          price: "100",
+          description: "mo ta",
+          image:
+            "https://static.giantbomb.com/uploads/original/12/127694/2142029-yuna_ffx.jpg"
+        },
+        {
+          name: "abc 4",
+          price: "100",
+          description: "mo ta",
+          image:
+            "https://static.giantbomb.com/uploads/original/12/127694/2142029-yuna_ffx.jpg"
+        },
+        {
+          name: "abc 5",
+          price: "100",
+          description: "mo ta",
+          image:
+            "https://static.giantbomb.com/uploads/original/12/127694/2142029-yuna_ffx.jpg"
+        }
+      ];
+
+      for (let index = 0; index < productArr.length; index++) {
+        const product = productArr[index];
+
+        let productOuter = document.createElement("div");
+        productOuter.style.width = "25%";
+        productOuter.style.float = "left";
+
+        let productName = document.createElement("h3");
+        let productImage = document.createElement("img");
+        productImage.style.width = "100%";
+
+        let productPrice = document.createElement("p");
+        let productDes = document.createElement("p");
+
+        productOuter.appendChild(productImage);
+        productOuter.appendChild(productName);
+        productOuter.appendChild(productPrice);
+        productOuter.appendChild(productDes);
+
+        document.body.appendChild(productOuter);
+
+        productName.innerHTML = productArr[index].name;
+        productImage.src = productArr[index].image;
+        productPrice.innerHTML = productArr[index].price;
+        productDes.innerHTML = productArr[index].description;
+      }
+    </script>
+  </body>
+</html>
