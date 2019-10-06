@@ -1,55 +1,221 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Excercise 2</title>
-</head>
+  </head>
 
-<body>
+  <body>
+    <style>
+      .viewer {
+        width: 200px;
+        height: 20px;
+        border: 1px solid black;
+        margin-bottom: 20px;
+        text-align: right;
+      }
+    </style>
     <header>Excercise 2</header>
     <main>
-        <input type="text" class="resultDisplay">
-        <button class="num1" value="1">1</button>
-        <button class="num2" value="2">2</button>
-        <button class="num3" value="3">3</button>
-        <button class="num4" value="4">4</button>
-        <button class="num5" value="5">5</button>
-        <button class="num6" value="6">6</button>
-        <button class="num7" value="7">7</button>
-        <button class="num8" value="8">8</button>
-        <button class="num9" value="9">9</button>
-        <button class="num0" value="0">0</button>
+      <input type="text" id="viewer" class="viewer" value="0" />
 
-        <button class="but+">+</button>
-        <button class="but-">-</button>
-        <button class="butx">x</button>
-        <button class="but/">/</button>
+      <button class="num" onclick="clickButton(this)">7</button>
+      <button class="num" onclick="clickButton(this)">8</button>
+      <button class="num" onclick="clickButton(this)">9</button>
+      <button class="ops" onclick="clickButton(this)">+</button>
 
-        <button class="but=">=</button>
+      <button class="num" onclick="clickButton(this)">4</button>
+      <button class="num" onclick="clickButton(this)">5</button>
+      <button class="num" onclick="clickButton(this)">6</button>
+      <button class="ops" onclick="clickButton(this)">-</button>
+
+      <button class="num" onclick="clickButton(this)">1</button>
+      <button class="num" onclick="clickButton(this)">2</button>
+      <button class="num" onclick="clickButton(this)">3</button>
+      <button class="ops" onclick="clickButton(this)">x</button>
+
+      <button class="num" onclick="clickButton(this)">0</button>
+      <button class="equals" id="equals" onclick="clickButton(this)">=</button>
+      <button class="ops" onclick="clickButton(this)">/</button>
     </main>
     <script>
-        const num1 = document.querySelector('.num1')
-        const num2 = document.querySelector('.num2')
-        const num3 = document.querySelector('.num3')
-        const num4 = document.querySelector('.num4')
-        const num5 = document.querySelector('.num5')
-        const num6 = document.querySelector('.num6')
-        const num7 = document.querySelector('.num7')
-        const num8 = document.querySelector('.num8')
-        const num9 = document.querySelector('.num9')
-        const num0 = document.querySelector('.num0')
+      // Declare 2 array to save number and operator
+      let numArray = new Array();
+      let numIndex = 0;
+      let operatorArray = new Array();
+      let operatorIndex = 0;
 
-        const butAddition = document.querySelector('.but+')
-        const butSubtraction = document.querySelector('.but-')
-        const butMultiplication = document.querySelector('.butx')
-        const butDivision = document.querySelector('.but/')
-        const butEqual = document.querySelector('.but=')
+      // Declare 3 var to process display
+      let viewer = document.querySelector("#viewer");
+      let oldNum = "";
+      let currentNum = "";
 
+      // declare 1 var to check calculate finish
+      let end = false;
 
+      // declare 1 var to process change operator
+      let changeOperator = false;
+
+      // declare 1 var to process priorities
+      let priorityVar = 0;
+
+      // declare 1 var to store old operator
+      let oldOperator = "";
+
+      function clickButton(obj) {
+        if (end) {
+          viewer.value = "";
+          end = false;
+        }
+        if (oldNum == "" && currentNum == "") {
+          oldNum = viewer.value;
+        }
+        if (oldNum == "0") {
+          oldNum = "";
+        }
+        let type = obj.innerHTML;
+        //Distribute to number array
+        if (
+          type == "0" ||
+          type == "1" ||
+          type == "2" ||
+          type == "3" ||
+          type == "4" ||
+          type == "5" ||
+          type == "6" ||
+          type == "7" ||
+          type == "8" ||
+          type == "9"
+        ) {
+          changeOperator = false;
+          currentNum += type;
+          viewer.value = oldNum + currentNum;
+        }
+
+        //Distribute to operator array
+        else if (type == "+" || type == "-" || type == "x" || type == "/") {
+          if (changeOperator) {
+            if (
+              ((oldOperator == "x" || oldOperator == "/") && type == "+") ||
+              type == "-"
+            ) {
+              priorityVar--;
+            } else if (
+              ((oldOperator == "+" || oldOperator == "-") && type == "x") ||
+              type == "/"
+            ) {
+              priorityVar++;
+            }
+            operatorArray[operatorIndex - 1] = type;
+
+            viewer.value =
+              viewer.value.substr(0, viewer.value.length - 1) + type;
+          } else {
+            oldOperator = type;
+            numArray[numIndex] = Number(currentNum);
+            numIndex++;
+
+            operatorArray[operatorIndex] = type;
+            operatorIndex++;
+
+            viewer.value = viewer.value + type;
+
+            if ((type == "x") | (type == "/")) {
+              priorityVar++;
+            }
+          }
+          changeOperator = true;
+          oldNum = "";
+          currentNum = "";
+        } else if (type == "=") {
+          end = true;
+          if (currentNum != "") {
+            numArray[numIndex] = Number(currentNum);
+          }
+
+          // call function calculate
+          getValue();
+
+          //Reset all after calculate
+          oldNum = "";
+          currentNum = "";
+          numArray = new Array();
+          numIndex = 0;
+          operatorArray = new Array();
+          operatorIndex = 0;
+          priorityVar = 0;
+        }
+      }
+
+      const getValue = () => {
+        operatorIndex--;
+
+        // priority Var first
+        while (priorityVar > 0) {
+          for (let i = 0; i <= operatorIndex; i++) {
+            if (operatorArray[i] == "x" || operatorArray[i] == "/") {
+              let a = numArray[i];
+              let b = numArray[i + 1];
+              let result = 0;
+              if (operatorArray[i] == "x") {
+                result = a * b;
+              } else if (b == 0) {
+                viewer.value = "0";
+              } else {
+                result = a / b;
+              }
+
+              // replace array[i]
+              numArray[i] = result;
+
+              // delete and collape num array
+              for (let iNew = i + 1; iNew < numIndex; iNew++) {
+                numArray[iNew] = numArray[iNew + 1];
+              }
+              numIndex--;
+
+              // delete and collapse operator array
+              for (let iNew = i; iNew < operatorIndex; iNew++) {
+                operatorArray[iNew] = operatorArray[iNew + 1];
+              }
+              operatorIndex--;
+
+              // delete priorty Var
+              priorityVar--;
+
+              break;
+            }
+          }
+        }
+
+        //normal calculate
+        while (numIndex > 0) {
+          let a = numArray[0];
+          let b = numArray[1];
+          let result = 0;
+
+          if (operatorArray[0] == "+") {
+            result = a + b;
+          } else {
+            result = a - b;
+          }
+
+          numArray[0] = result;
+
+          for (let iNew = 1; iNew < numIndex; iNew++) {
+            numArray[iNew] = numArray[iNew + 1];
+          }
+          numIndex--;
+
+          for (let iNew = 0; iNew < operatorIndex; iNew++) {
+            operatorArray[iNew] = operatorArray[iNew + 1];
+          }
+          operatorIndex--;
+        }
+        viewer.value = numArray[0];
+      };
     </script>
-</body>
-
+  </body>
 </html>
