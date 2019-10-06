@@ -135,13 +135,13 @@
         else if (type == "+" || type == "-" || type == "x" || type == "/") {
           if (changeOperator) {
             if (
-              ((oldOperator == "x" || oldOperator == "/") && type == "+") ||
-              type == "-"
+              (oldOperator == "x" || oldOperator == "/") &&
+              (type == "+" || type == "-")
             ) {
               priorityVar--;
             } else if (
-              ((oldOperator == "+" || oldOperator == "-") && type == "x") ||
-              type == "/"
+              (oldOperator == "+" || oldOperator == "-") &&
+              (type == "x" || type == "/")
             ) {
               priorityVar++;
             }
