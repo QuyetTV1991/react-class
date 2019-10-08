@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Code Print Even Number</title>
+</head>
+
+<body>
+    <header>Print Even Number</header>
+    <main>
+        <h1>Print even number</h1>
+        <div class="form">
+            <label for="maxNumber">Input the maximum number</label>
+            <input type="text" id="maxNumber" class="maxNumber"><br>
+            <label for="minNumber">Input the minimum number</label>
+            <input type="text" id="minNumber" class="minNumber"><br>
+            <button class="printResult">Print Even Number</button>
+            <div id="viewResult"></div>
+        </div>
+        <script>
+            const maxInput = document.querySelector('.maxNumber')
+            const minInput = document.querySelector('.minNumber')
+            const printResultButton = document.querySelector('.printResult')
+
+            printResultButton.addEventListener('click', function () {
+                if (maxInput.value === '' || minInput.value === '') return alert('please fill input')
+
+                let max = Number(maxInput.value)
+                let min = Number(minInput.value)
+                document.getElementById('viewResult').innerHTML = fprintEvenNumber(min, max)
+
+            })
+            function fprintEvenNumber(min, max) {
+                let result = ''
+                if (isNaN(max) || isNaN(min)) return alert('Invalid number, please fill number')
+                if (min > max) return alert('Invalid Number, minimum number > maximum number')
+                for (i = min; i <= max; i++) {
+                    if (i % 2 == 0) result = result + ' ' + i
+                }
+                return result
+            }
+
+        </script>
+    </main>
+</body>
+
+</html>
