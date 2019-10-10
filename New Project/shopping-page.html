@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Oswald&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://kit.fontawesome.com/c7d9204842.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script>
+      function openNav() {
+        document.getElementById("mySidenav").style.width = "250px";
+      }
+
+      function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+      }
+    </script>
+    <link rel="stylesheet" href="./asset/css/mystyle.css" />
+    <title>Shopping Cart Page</title>
+  </head>
+  <body class="body mx-auto">
+    <header class="header d-flex justify-content-between padding-30px">
+      <div class="bar">
+        <div id="mySidenav" class="sidenav">
+          <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"
+            >&times;</a
+          >
+          <a href="./detail-page.html">PRODUCT DETAIL</a>
+          <a href="./login-page.html">LOGIN</a>
+          <a href="./register-page.html">REGISTER</a>
+          <a href="./shopping-page.html">SHOPPING CART</a>
+        </div>
+        <i class="fas fa-bars fa-2x" onclick="openNav()"></i>
+      </div>
+      <div class="img-logo">
+        <a href="./index.html">
+          <img src="./asset/images/logo_shop.png" alt="LOGO_SHOP" />
+        </a>
+      </div>
+      <nav class="navbar navbar-expand-md justify-content-between home-page">
+        <ul class="navbar-nav">
+          <li class="nav-item px-2">
+            <a class="nav-link text-dark" href="./index.html"><b>HOME</b></a>
+          </li>
+          <li class="nav-item px-2 dropdown">
+            <a class="nav-link text-dark" data-toggle="dropdown" href="#"
+              ><b>PAGES</b></a
+            >
+            <ul class="dropdown-menu">
+              <li>
+                <a href="./detail-page.html" target="_blank" class="dropdown-item"><b>PRODUCT DETAIL</b></a>
+              </li>
+              <li>
+                <a href="./login-page.html" target="_blank" class="dropdown-item"><b>LOGIN</b></a>
+              </li>
+              <li>
+                <a href="./register-page.html" target="_blank" class="dropdown-item"><b>REGISTER</b></a>
+              </li>
+              <li>
+                <a href="./shopping-page.html" target="_blank" class="dropdown-item"><b>SHOPPING CART</b></a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <div class="">
+        <span class="icon rounded-circle bg-pink icon-search">
+          <a href="#">
+            <i class="fas fa-search i-search fa-lg text-orange"></i>
+          </a>
+        </span>
+        <span class="icon rounded-circle bg-pink margin-left-10px icon-user">
+          <a href="./login-page.html">
+            <i class="far fa-user i-user fa-lg text-orange"></i>
+          </a>
+        </span>
+        <span class="icon rounded-circle bg-pink margin-left-10px">
+          <a href="./shopping-page.html">
+            <span class="notification">
+              <i class="fas fa-shopping-cart fa-lg text-orange"></i>
+              <span class="badge bg-pink text-orange">3</span>
+            </span>
+          </a>
+        </span>
+      </div>
+    </header>
+    <main class="main mx-auto py-5 my-5">
+      <div class="sub-header margin-bot-150px">
+        <h1 class="text-center font-weight-bold fz-48px pb-5">Shopping Cart</h1>
+        <div class="navbar navbar-expand d-flex justify-content-center">
+          <ul class="navbar-nav">
+            <li class="nav-item px-4 border-right-dark"><a href="./index.html" class="text-dark font-weight-bold">HOME</a></li>
+            <li class="nav-item px-4">
+              <a href="./shopping-page.html" class="text-muted disable-link">CART</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="shop-area mx-auto clearfix">
+        <form action="">
+        <div class="overflow">
+          <table class="table-shopping">
+            <tr>
+              <th>Images</th>
+              <th>Product</th>
+              <th>Unit Price</th>
+              <th>Quantity</th>
+              <th>Total</th>
+              <th>Remove</th>
+            </tr>
+            <tr>
+              <td></td>
+              <td>Bakix Furniture</td>
+              <td>$130.00</td>
+              <td>
+                <span class="but-oval bg-pink">
+                  <button class="but-square rounded-circle border-0 bg-light">
+                    -
+                  </button>
+                  <span class="px-5">1</span>
+                  <button class="but-square rounded-circle border-0 bg-light">
+                    +
+                  </button>
+                </span>
+              </td>
+              <td>$130.00</td>
+              <td>X</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>Sujon Chair Set</td>
+              <td>$120.50</td>
+              <td>
+                <span class="but-oval bg-pink">
+                  <button class="but-square rounded-circle border-0 bg-light">
+                    -
+                  </button>
+                  <span class="px-5">1</span>
+                  <button class="but-square rounded-circle border-0 bg-light">
+                    +
+                  </button>
+                </span>
+              </td>
+              <td>$120.50</td>
+              <td>X</td>
+            </tr>
+          </table>
+        </div>
+        <div class="d-flex justify-content-between py-5 row">
+            <div class="col-12 col-md-7 col-lg-8 padding-y-5">
+              <input
+                type="text"
+                placeholder="Coupon Code"
+                class="but-square-lg bg-light text-muted border pl-3"
+              />
+              <button
+                type="submit"
+                class="but-square-lg border-0 bg-success text-white small ml-3"
+              >
+                APPLY COUPON
+              </button>
+            </div>
+            <button
+              type="submit"
+              class="but-square-lg border-0 bg-orange text-white small col-12 col-md-5 col-lg-4"
+            >
+              UPDATE CART
+            </button>
+        </div>
+        <div class="cart-total">
+          <h2 class="fz-30px text-dark font-weight-bold pb-5">Cart Totals</h2>
+          <table class="table-total">
+            <tr>
+              <td>Subtotal</td>
+              <td>$250.00</td>
+            </tr>
+            <tr>
+              <td>Total</td>
+              <td>$250.00</td>
+            </tr>
+          </table>
+
+          <div class="pt-5">
+            <button
+              type="submit"
+              class="but-square-slg border-0 bg-orange text-white small"
+              formaction="./action-page.html" formtarget="_blank" formmethod="POST"
+            >
+              PROCEED TO CHECKOUT
+            </button>
+          </div>
+        </div>
+      </form>
+      </div>
+    </main>
+    <footer class="footer mx-auto row">
+      <div class="col-12 col-md-5 col-lg-4 pb-5">
+        <img src="./asset/images/logo_shop.png" alt="LOGO-SHOP" class="pb-5" />
+        <article class="text-secondary pb-5">
+          Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum
+          dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
+          amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem
+          ipsum dolor sit amet.
+        </article>
+        <div class="d-flex column">
+          <img
+            src="./asset/images/time.png"
+            alt="TIME_LOGO"
+            style="width: 5rem; height: 5rem;"
+          />
+          <div class="pl-2">
+            <p class="mb-0">Got Question ? Call us 24/7!</p>
+            <p class="font-weight-light fz-30px">(0600) 874 548</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-7 col-lg-8 d-flex justify-content-around">
+        <ul>
+          <h3 class="text-dark font-weight-bold pb-5">Social Media</h3>
+          <li class="pb-3"><a href="#" class="text-muted">Facebook</a></li>
+          <li class="pb-3"><a href="#" class="text-muted">Twitter</a></li>
+          <li class="pb-3"><a href="#" class="text-muted">Behance</a></li>
+          <li class="pb-3"><a href="#" class="text-muted">Dribble</a></li>
+          <li class="pb-3"><a href="#" class="text-muted">Linkedin</a></li>
+          <li class="pb-3"><a href="#" class="text-muted">Youtube</a></li>
+        </ul>
+        <ul>
+          <h3 class="text-dark font-weight-bold pb-5">Location</h3>
+          <li class="pb-3"><a href="#" class="text-muted">New York</a></li>
+          <li class="pb-3"><a href="#" class="text-muted">Tokyo</a></li>
+          <li class="pb-3"><a href="#" class="text-muted">Dhaka</a></li>
+          <li class="pb-3"><a href="#" class="text-muted">Chittagong</a></li>
+          <li class="pb-3"><a href="#" class="text-muted">China</a></li>
+          <li class="pb-3"><a href="#" class="text-muted">Japan</a></li>
+        </ul>
+        <ul>
+          <h3 class="text-dark font-weight-bold pb-5">About</h3>
+          <li class="pb-3">
+            <a href="#" class="text-muted">Term & Conditions</a>
+          </li>
+          <li class="pb-3">
+            <a href="#" class="text-muted">Privacy Policy</a>
+          </li>
+          <li class="pb-3"><a href="#" class="text-muted">Contact Us</a></li>
+          <li class="pb-3"><a href="#" class="text-muted">FAQ</a></li>
+          <li class="pb-3"><a href="#" class="text-muted">Wholesale</a></li>
+          <li class="pb-3"><a href="#" class="text-muted">Direction</a></li>
+        </ul>
+      </div>
+    </footer>
+  </body>
+</html>
