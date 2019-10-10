@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>todo-list</title>
+</head>
+
+<body>
+    <header>TO DO LIST</header>
+    <main>
+        <h1>YOUR TO DO LIST</h1>
+        <input type="text" class="toDoItem">
+        <button class="add">Add</button>
+        <ul class="listToDo">
+        </ul>
+    </main>
+    <script>
+        const listToDoContainer = document.querySelector('.listToDo')
+        const toDoItemEl = document.querySelector('.toDoItem')
+        const addBtn = document.querySelector('.add')
+
+        addBtn.addEventListener('.click', function () {
+            let liEl = document.createElement('span')
+            liEl.innerHTML = `${toDoItemEl.value}`
+            listToDoContainer.append(liEl)
+        })
+
+        function createProductEl(productObj) {
+            const productEl = document.createElement('div')
+            productEl.classList.add('gallery')
+            productEl.innerHTML = `
+        <img src = ${productObj.img} alt = ${productObj.alt}>
+        <div class="desc">
+            <h4 class="small text-danger text-left">${productObj.catogery}</h4>
+            <h4 class="font-weight-bold text-dark text-left">${productObj.name}</h4>
+            <div class="d-flex justify-content-start">
+                <h6 class="font-weight-bolder text-secondary pr-5">${productObj.priceSale}</h6>
+                <h6 class="font-weight-bolder strike">${productObj.price}</h6>
+            </div>
+        </div> 
+    `
+            return productEl
+        }
+    </script>
+</body>
+
+</html>
