@@ -1,48 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" href="../class4/mystyle.css" />
     <title>todo-list</title>
-  </head>
+</head>
 
-  <body>
+<body>
     <header>TO DO LIST</header>
     <main>
-      <h1>YOUR TO DO LIST</h1>
-      <input type="text" id="item" />
-      <button id="add">Add</button>
-      <h2>To Do</h2>
-      <ul class="todo" id="todo"></ul>
+        <h1>YOUR TO DO LIST</h1>
+        <input type="text" id="item" />
+        <button id="add">Add</button>
+        <h2>To Do</h2>
+        <ul class="todo" id="todo"></ul>
+        <div class="myBtn">
+            <button class="button active" onclick="filterSelection('all')">All</button>
+            <button class="button" onclick="filterSelection('done')">Done</button>
+            <button class="button" onclick="filterSelection('notdone')">Not Done</button>
+        </div>
     </main>
     <script>
-      // button to add new item
-      let addButton = document.querySelector("#add");
-      // Input field to add new item
-      let addInput = document.querySelector("#item");
+        // button to add new item
+        let addButton = document.querySelector("#add");
+        // Input field to add new item
+        let addInput = document.querySelector("#item");
 
-      //event add new Item
-      addButton.addEventListener("click", function() {
-        // grab value from input field
-        let newItem = document.querySelector("#item").value;
-        // if input something !== " " , add item  into ul#todo
-        if (newItem) {
-          addItemTodo(newItem); //call function
-          document.querySelector("#item").value = " "; //reset input field
+        //event add new Item
+        addButton.addEventListener("click", function () {
+            // grab value from input field
+            let newItem = document.querySelector("#item").value;
+            // if input something !== " " , add item  into ul#todo
+            if (newItem) {
+                addItemTodo(newItem); //call function
+                document.querySelector("#item").value = " "; //reset input field
+            }
+        });
+
+        // define function addItemTodo(newItem)
+        function addItemTodo(text) {
+            let list = document.querySelector("#todo");
+            let item = document.createElement("li");
+            item.classList.add("todoItem", "show");
+            item.innerHTML = text;
+            // add item into first row
+            list.insertBefore(item, list.childNodes[0]);
+            // add Event Listener cho item "li"
+            item.addEventListener('click', toggleClass())
         }
-      });
 
-      // define function addItemTodo(newItem)
-      function addItemTodo(text) {
-        let list = document.querySelector("#todo");
-        let item = document.createElement("li");
-        item.classList.add("todoItem");
-        item.classList.toggle("done");
-        item.innerHTML = text;
-        list.insertBefore(item, list.childNodes[0]);
-      }
+        function toggleClass() {
+            let myTodolist = document.getElementsByClassName("todoItem");
+            for (i = 0; i < myTodolist.length; i++) {
+                let itemToggle = myTodolist[i];
+                itemToggle.onclick = function () {
+                    if (itemToggle.classList.contains("done")) itemToggle.classList.remove("done")
+                    else itemToggle.classList.add("done")
+                }
+            }
+        }
+
+        // when click item, it will toggle class "done" and "notdone"
+        // let list = document.querySelector('ul');
+        // list.addEventListener('click', function (ev) {
+        //     if (ev.target.tagName === 'LI') {
+        //         if (ev.target.classList.contains('done')) {
+        //             ev.target.classList.remove('done')
+        //             ev.target.classList.add('notdone')
+        //         }
+        //         else {
+        //             ev.target.classList.add('done')
+        //             ev.target.classList.remove('notdone')
+        //         }
+        //     }
+        // }, false);
+
+        // case done
+        // let myTodolist = document.getElementsByClassName("todoItem");
+        // for (i = 0; i < myTodolist.length; i++) {
+        //     let item = myTodolist[i];
+        //     if (item.classList.contains("show")) {
+        //         item.classList.toggle("hidden");
+        //     }
+        //     else {
+        //         item.classList.toggle("show");
+        //     }
+        // }
     </script>
-  </body>
+</body>
+
 </html>
