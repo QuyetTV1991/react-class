@@ -1,3 +1,77 @@
+*{
+    margin: 0%;
+    padding: 0%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+body {
+    width: 500px;
+    margin: 0px auto;
+}
+header {
+    text-align: center;
+    font-weight: bolder;
+    font-size: 32px;
+    color: green;
+    margin: 16px 0px;
+}
+main {
+    border: rosybrown 1px dashed;
+    padding: 20px;
+}
+h1 {
+    text-align: left;
+    font-weight: lighter;
+    color: indianred;
+    margin: 16px 0px;
+}
+#item {
+    border: 1px solid black;
+    padding: 5px 10px;
+}
+#add {
+    border: none;
+    width: 64px;
+    height: 32px;
+    color:blue;
+    background-color: darkgrey;
+}
+#add:hover {
+    background-color: grey;
+}
+h2 {
+    margin: 20px 0px;
+    text-decoration: underline;
+    color: #000;
+}
 .todoItem {
+    color: blue ;
+    padding: 5px 0px 5px 5px;
+    background-color: #ece9cc;
+    margin: 2px 0px;
+    display: none;
+}
+.todoItem:hover {
+    background-color: tan;
+}
+.show {
+    display: block;
+}
+.done {
+    color: orange;
+}
+.myBtnContainer {
+    padding: 20px 0px;
+}
+.button {
+    width: 100px;
+    height: auto;
+    border: none;
+    padding: 5px;
+    background-color: darkgrey;
+}
+.active {
+    background-color: steelblue;
     color: red;
 }

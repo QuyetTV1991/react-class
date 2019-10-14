@@ -1,133 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="stylesheet" href="../class4/mystyle.css" />
-    <title>todo-list</title>
-  </head>
 
-  <body>
-    <header>TO DO LIST</header>
-    <main>
-      <h1>YOUR TO DO LIST</h1>
-      <input type="text" id="item" />
-      <button id="add">Add</button>
-      <h2>To Do</h2>
-      <ul class="todo" id="todo"></ul>
-      <div class="myBtnContainer">
-        <button class="button active" value="all">All</button>
-        <button class="button" value="done">Done</button>
-        <button class="button" value="notdone">Not Done</button>
-      </div>
-    </main>
-    <script>
-      // button to add new item
-      let addButton = document.querySelector("#add");
-      // Input field to add new item
-      let addInput = document.querySelector("#item");
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link rel="stylesheet" href="../class4/mystyle.css" />
+  <title>todo-list</title>
+</head>
 
-      //event add new Item
-      addButton.addEventListener("click", function() {
-        // grab value from input field
-        let newItem = document.querySelector("#item").value;
-        // if input something !== " " , add item  into ul#todo
-        if (newItem) {
-          addItemTodo(newItem); //call function
-          document.querySelector("#item").value = " "; //reset input field
+<body>
+  <header>TO DO LIST</header>
+  <main>
+    <h1>INPUT YOUR TO DO LIST</h1>
+    <input type="text" id="item" placeholder="Input here ..." />
+    <button id="add">ADD</button>
+    <h2>To Do</h2>
+    <ul class="todo" id="todo"></ul>
+    <div class="myBtnContainer">
+      <button class="button active" value="all">All</button>
+      <button class="button" value="done">Done</button>
+      <button class="button" value="notdone">Not Done</button>
+    </div>
+  </main>
+  <script>
+    // button to add new item
+    let addButton = document.querySelector("#add");
+    // Input field to add new item
+    let addInput = document.querySelector("#item");
+
+    //event add new Item
+    addButton.addEventListener("click", function () {
+      // grab value from input field
+      let newItem = document.querySelector("#item").value;
+      // if input something !== " " , add item  into ul#todo
+      if (newItem) {
+        addItemTodo(newItem); //call function
+        document.querySelector("#item").value = " "; //reset input field
+      }
+    });
+
+    // define function addItemTodo(newItem)
+    function addItemTodo(text) {
+      let list = document.querySelector("#todo");
+      let item = document.createElement("li");
+      item.classList.add("todoItem", "show");
+      item.innerHTML = text;
+      // add item into first row
+      list.insertBefore(item, list.childNodes[0]);
+      // add Event Listener cho item "li"
+      item.addEventListener("click", toggleClass());
+    }
+
+    function toggleClass() {
+      let myTodolist = document.getElementsByClassName("todoItem");
+      for (i = 0; i < myTodolist.length; i++) {
+        let itemToggle = myTodolist[i];
+        itemToggle.onclick = function () {
+          if (itemToggle.classList.contains("done"))
+            itemToggle.classList.remove("done");
+          else itemToggle.classList.add("done");
+        };
+      }
+    }
+
+    // Add active class to the current button (highlight it) and show selected element
+    let btns = document.querySelectorAll(".button");
+    for (let i = 0; i < btns.length; i++) {
+      btns[i].addEventListener("click", function () {
+        let current = document.getElementsByClassName("active");
+        current[0].className = current[0].className.replace(" active", "");
+        this.className += " active";
+        let filter = btns[i].value;
+        if (filter == "done") {
+          filterSelector("done");
+        } else if (filter == "notdone") {
+          filterSelector("notdone");
+        } else {
+          filterSelector("all");
         }
       });
+    }
 
-      // define function addItemTodo(newItem)
-      function addItemTodo(text) {
-        let list = document.querySelector("#todo");
-        let item = document.createElement("li");
-        item.classList.add("todoItem", "show");
-        item.innerHTML = text;
-        // add item into first row
-        list.insertBefore(item, list.childNodes[0]);
-        // add Event Listener cho item "li"
-        item.addEventListener("click", toggleClass());
-      }
-
-      function toggleClass() {
-        let myTodolist = document.getElementsByClassName("todoItem");
+    // define function Filter Selector
+    function filterSelector(selected) {
+      let myTodolist = document.getElementsByClassName("todoItem");
+      if (selected == "all") {
         for (i = 0; i < myTodolist.length; i++) {
-          let itemToggle = myTodolist[i];
-          itemToggle.onclick = function() {
-            if (itemToggle.classList.contains("done"))
-              itemToggle.classList.remove("done");
-            else itemToggle.classList.add("done");
-          };
+          RemoveClass(myTodolist[i], "show"); //remove all class "show" and then add "show" to selected element
+          if (myTodolist[i].className.indexOf("") > -1) AddClass(myTodolist[i], "show");
         }
       }
+      if (selected == "done") {
+        for (i = 0; i < myTodolist.length; i++) {
+          RemoveClass(myTodolist[i], "show");
+          if (myTodolist[i].className.indexOf("done") > -1) AddClass(myTodolist[i], "show");
+        }
+      }
+      if (selected == "notdone") {
+        for (i = 0; i < myTodolist.length; i++) {
+          RemoveClass(myTodolist[i], "show");
+          if (myTodolist[i].className.indexOf("done") > -1) continue;
+          else {
+            AddClass(myTodolist[i], "show");
+          }
+        }
+      }
+    }
+    // Show filtered elements
+    function AddClass(element, name) {
+      let arr1 = element.className.split(" ");
+      let arr2 = name.split(" ");
+      for (let i = 0; i < arr2.length; i++) {
+        if (arr1.indexOf(arr2[i]) == -1) {
+          element.className += " " + arr2[i];
+        }
+      }
+    }
 
-      // Add active class to the current button (highlight it)
-      let btns = document.querySelectorAll(".button");
-      for (let i = 0; i < btns.length; i++) {
-        btns[i].addEventListener("click", function() {
-          let current = document.getElementsByClassName("active");
-          current[0].className = current[0].className.replace(" active", "");
-          this.className += " active";
-          let filter = btns[i].value;
-          if (filter == "done") {
-            filterSelector("done");
-          } else if (filter == "notdone") {
-            filterSelector("notdone");
-          } else {
-            filterSelector("all");
-          }
-        });
-      }
-      function filterSelector(c) {
-        let x = document.getElementsByClassName("todoItem");
-        if (c == "all") {
-          for (i = 0; i < x.length; i++) {
-            RemoveClass(x[i], "show");
-            if (x[i].className.indexOf("") > -1) AddClass(x[i], "show");
-          }
-        }
-        if (c == "done") {
-          for (i = 0; i < x.length; i++) {
-            RemoveClass(x[i], "show");
-            if (x[i].className.indexOf("done") > -1) AddClass(x[i], "show");
-          }
-        }
-        if (c == "notdone") {
-          for (i = 0; i < x.length; i++) {
-            RemoveClass(x[i], "show");
-            if (x[i].className.indexOf("done") > -1) continue;
-            else {
-              AddClass(x[i], "show");
-            }
-          }
+    // Hide elements that are not selected
+    function RemoveClass(element, name) {
+      let arr1 = element.className.split(" ");
+      let arr2 = name.split(" ");
+      for (let i = 0; i < arr2.length; i++) {
+        while (arr1.indexOf(arr2[i]) > -1) {
+          arr1.splice(arr1.indexOf(arr2[i]), 1);
         }
       }
-      // Show filtered elements
-      function AddClass(element, name) {
-        var i, arr1, arr2;
-        arr1 = element.className.split(" ");
-        arr2 = name.split(" ");
-        for (i = 0; i < arr2.length; i++) {
-          if (arr1.indexOf(arr2[i]) == -1) {
-            element.className += " " + arr2[i];
-          }
-        }
-      }
+      element.className = arr1.join(" ");
+    }
+  </script>
+</body>
 
-      // Hide elements that are not selected
-      function RemoveClass(element, name) {
-        var i, arr1, arr2;
-        arr1 = element.className.split(" ");
-        arr2 = name.split(" ");
-        for (i = 0; i < arr2.length; i++) {
-          while (arr1.indexOf(arr2[i]) > -1) {
-            arr1.splice(arr1.indexOf(arr2[i]), 1);
-          }
-        }
-        element.className = arr1.join(" ");
-      }
-    </script>
-  </body>
 </html>
