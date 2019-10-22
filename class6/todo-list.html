@@ -8,7 +8,7 @@
     <title>To Do List</title>
     <style>
         body button {
-            width: 100px;
+            width: 110px;
             height: 40px;
             font-size: 15px;
             margin: 10px 10px;
@@ -20,16 +20,29 @@
             font-size: 15px;
         }
 
+        .item {
+            display: flex;
+            justify-content: space-between;
+        }
+
         .todoitem {
             color: blue;
             font-size: 20px;
             margin: 10px 0;
             user-select: none;
+            display: flex;
+            justify-content: space-between;
         }
 
         .todoitem.done {
             color: gray;
             text-decoration: line-through;
+        }
+
+        .button-remove {
+            width: 100px;
+            height: 25px;
+            color: red;
         }
 
         .filter-button.active {
@@ -46,48 +59,45 @@
 <body>
     <h2>To Do List</h2>
 
-
     <script>
         function generateUniqueId() {
-            return Math.floor(new Date().getTime() * Math.random()) + ''
+            return Math.floor(new Date().getTime() * Math.random()) + "";
         }
-
+        /**
+         * THIS IS OUR MAIN APP STATE
+         * appState is an object used to hold value that mapping with UI appearance.
+        */
         let appState = {
-            filter: 'all',
+            filter: "all",
             todos: [
                 {
                     id: generateUniqueId(),
-                    name: 'nau an',
+                    name: "nau an",
                     done: false
                 },
                 {
                     id: generateUniqueId(),
-                    name: 'giat do',
+                    name: "giat do",
                     done: true
                 },
                 {
                     id: generateUniqueId(),
-                    name: 'trong con ',
+                    name: "trong con ",
                     done: false
-                },
+                }
             ]
         };
-        function renderTodoItems(todos) {
-            let todosStringArr = todos.map(function (todo) {
-                return `
-            <li class="todoitem ${todo.done ? 'done' : ''}" data-id="${todo.id}">
-              ${todo.name}
-            </li>`
-            })
-            return todosStringArr.join('')
-        }
+        /**
+         * THIS IS OUR MAIN FUNCTION
+         * Take in a application state object and render HTML accordingly
+        */
         function render(state) {
-            let body = document.querySelector('body')
+            let body = document.querySelector("body");
             let displayTodo = state.todos.filter(function (todo) {
-                if (state.filter === 'all') return true
-                if (state.filter === 'done') return todo.done === true
-                if (state.filter === 'notDone') return todo.done === false
-            })
+                if (state.filter === "all") return true;
+                if (state.filter === "done") return todo.done === true;
+                if (state.filter === "notDone") return todo.done === false;
+            });
             let template = `
         <form class="add-todo">
           <input class="todoitem-input" type="text" />
@@ -97,52 +107,112 @@
           ${renderTodoItems(displayTodo)}
         </ul>
         <div>
-          <button class="show-all filter-button ${state.filter === 'all' ? 'active' : ''}">All</button>
-          <button class="show-done filter-button  ${state.filter === 'done' ? 'active' : ''}">Done</button>
-          <button class="show-not-done filter-button  ${state.filter === 'notDone' ? 'active' : ''}">Not Done</button>
+          ${renderFilterButton("all", state)}
+          ${renderFilterButton("done", state)}
+          ${renderFilterButton("notDone", state)}
         </div>
-        `
-            body.innerHTML = template
-            bindEvents()
+        `;
+            body.innerHTML = template;
+            bindEvents();
         }
-        render(appState)
+        function renderTodoItems(todos) {
+            let todosStringArr = todos.map(function (todo) {
+                return `
+                <div class="item">
+                    <li class="todoitem ${todo.done ? "done" : ""}" data-id="${todo.id}">
+                    ${todo.name}
+                    </li>
+                    <button class="button-remove" onclick="remove('${todo.id}')">Delete</button>
+                </div>
+            `;
+            });
+            return todosStringArr.join("");
+        }
+        function renderFilterButton(type, state) {
+            const classNameMapper = {
+                all: "show-all",
+                done: "show-done",
+                notDone: "show-not-done"
+            };
+            const buttonTextMapper = {
+                all: "All",
+                done: "Done",
+                notDone: "Not Done"
+            };
+            const getCountFunctionsMapper = {
+                all: getAllTodosCount(state),
+                done: getAllDoneTodosCount(state),
+                notDone: getAllNotDoneTodosCount(state)
+            };
+            return `
+          <button class="${classNameMapper[type]} filter-button ${state.filter === type ? "active" : ""}" onclick="showStatus('${type}')">
+          ${buttonTextMapper[type]} (${getCountFunctionsMapper[type]})</button>
+        `;
+        }
         function bindEvents() {
-            document.querySelector('.add-todo').addEventListener('submit', function () {
+            document.querySelector(".add-todo").addEventListener("submit", function (event) {
+                event.preventDefault();
+                const todoName = document.querySelector("input").value;
+                if (invalidInput(todoName)) {
+                    return;
+                }
                 let newTodo = {
                     id: generateUniqueId(),
-                    name: document.querySelector('input').value,
+                    name: todoName,
                     done: false
-                }
-                appState.todos.push(newTodo)
-                render(appState)
-            })
-
-            document.querySelector('.show-done').addEventListener('click', function () {
-                appState.filter = 'done'
-                render(appState)
-            })
-
-            document.querySelector('.show-not-done').addEventListener('click', function () {
-                appState.filter = 'notDone'
-                render(appState)
-            })
-
-            document.querySelector('.show-all').addEventListener('click', function () {
-                appState.filter = 'all'
-                render(appState)
-            })
-
-            Array.from(document.querySelectorAll('.todoitem')).forEach(function (todoItemEl) {
-                todoItemEl.addEventListener('click', function () {
-                    const id = todoItemEl.getAttribute('data-id')
+                };
+                appState.todos.push(newTodo);
+                render(appState);
+            });
+            // document.querySelector(".show-done").addEventListener("click", function () {
+            //     appState.filter = "done";
+            //     render(appState);
+            // });
+            // document.querySelector(".show-not-done").addEventListener("click", function () {
+            //     appState.filter = "notDone";
+            //     render(appState);
+            // });
+            // document.querySelector(".show-all").addEventListener("click", function () {
+            //     appState.filter = "all";
+            //     render(appState);
+            // });
+            document.querySelectorAll(".todoitem").forEach(function (todoItemEl) {
+                todoItemEl.addEventListener("click", function () {
+                    const id = todoItemEl.getAttribute("data-id");
                     const todo = appState.todos.find(function (item) {
-                        return item.id === id
-                    })
-                    todo.done = !todo.done
-                    render(appState)
-                })
-            })
+                        return item.id === id;
+                    });
+                    todo.done = !todo.done;
+                    render(appState);
+                });
+            });
         }
+        function showStatus(type) {
+            appState.filter = type
+            render(appState)
+        }
+        function remove(id) {
+            let a = appState.todos.findIndex(function (item) {
+                return item.id === id;
+            })
+            appState.todos.splice(a, 1)
+            render(appState)
+        }
+        function invalidInput(value) {
+            return value.trim() === "";
+        }
+        function getAllTodosCount(state) {
+            return state.todos.length;
+        }
+        function getAllDoneTodosCount(state) {
+            const doneTodos = state.todos.filter(todo => todo.done === true);
+            return doneTodos.length;
+        }
+        function getAllNotDoneTodosCount(state) {
+            const notDoneTodos = state.todos.filter(todo => todo.done === false);
+            return notDoneTodos.length;
+        }
+        render(appState);
     </script>
 </body>
 
