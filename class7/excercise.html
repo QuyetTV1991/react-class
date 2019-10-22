@@ -9,7 +9,107 @@
 </head>
 
 <body>
-
+    <script>
+        let students = [
+            {
+                name: "Quyet",
+                age: 12,
+                score: 10
+            },
+            {
+                name: "Quyet",
+                age: 10,
+                score: 1
+            },
+            {
+                name: "Huy",
+                age: 14,
+                score: 1
+            },
+            {
+                name: "Hong",
+                age: 15,
+                score: 4
+            },
+            {
+                name: "Ha",
+                age: 10,
+                score: 10
+            },
+            {
+                name: "Hoang",
+                age: 20,
+                score: 8
+            }
+        ];
+        // dan trang HTML
+        render()
+        function render() {
+            let body = document.querySelector('body')
+            let template = `
+                <div>
+                    ${renderAgeofStudent(students)}
+                </div>
+                <div>
+                    ${renderTotalAgeofGoodStudent(students)}
+                </div>
+                <div>
+                    ${renderListNameofStudentolderThan10(students)}
+                </div>
+                <div>
+                    ${renderListNameofStudentfrom10to15Age(students)}
+                </div>
+            `
+            body.innerHTML = template
+        }
+        // Viet function in ra so tuoi tung hoc sinh
+        function renderAgeofStudent(obj) {
+            let str = ""
+            obj.forEach(function (item) {
+                return str = str + `
+                        <span>Student Name: <b>${item.name}</b> |</span>
+                        <span>Age: <b>${item.age}</b> |</span>
+                        <span>Score: <b>${item.score}</b></span>
+                        <br>
+                        `
+            })
+            return "<h2>Print out Student Name and Age: </h2><br>" + str
+        }
+        // Viet function in tra ve tong so tuoi cua nhung nguoi co diem lon hon 5
+        function renderTotalAgeofGoodStudent(obj) {
+            let totalAgeGoodStudentobj = obj.filter(item => item.score >= 5)
+            let sum = 0
+            for (i = 0; i < totalAgeGoodStudentobj.length; i++) {
+                sum += totalAgeGoodStudentobj[i].age
+            }
+            return "<h2>Total Age of Good Student (score >=5) :</h2>" + sum
+        }
+        // Viet function in tra ve danh sach nhung hoc sinh co tuoi lon hon 10
+        function renderListNameofStudentolderThan10(obj) {
+            let listNameStudentOlder10obj = obj.filter(item => item.age >= 10)
+            let str = ''
+            listNameStudentOlder10obj.forEach(function (item) {
+                return str = str + `
+                    <span>Student Name: <b>${item.name}</b></span>
+                    <br>
+                `
+            })
+            return "<h2>List Name Student older than 10 years old :</h2><br>" + str
+        }
+        // Viet function in tra ve danh sach nhung hoc sinh co tuoi lon hon 10 va nho hon 15
+        function renderListNameofStudentfrom10to15Age(obj) {
+            let listNameStudentOlder10obj = obj.filter(item => item.age >= 10)
+            let listNameStudentfrom10to15obj = listNameStudentOlder10obj.filter(item => item.age <= 15)
+            let str = ''
+            listNameStudentfrom10to15obj.forEach(function (item) {
+                return str = str + `
+                    <span>Student Name: <b>${item.name}</b></span>
+                    <br>
+                `
+            })
+            return "<h2>List Name Student from 10 to 15 years old :</h2><br>" + str
+        }
+    </script>
 </body>
 
 </html>
