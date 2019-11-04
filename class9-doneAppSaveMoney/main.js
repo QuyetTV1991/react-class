@@ -55,6 +55,7 @@ function renderForm(state) {
     <form action="/action_page.php" autocomplete="off">
         <label for="expense">Expense</label>
         <input type="text" id="expense" name="" placeholder="Input..." />
+        <div class="suggestions"></div>
         <label for="amount">Amount</label>
         <input
         type="text"
@@ -68,33 +69,33 @@ function renderForm(state) {
             <option value="incomeMoney">Income Money</option>
         </select>
         ${
-          state.budgetRemain <= 0
-            ? '<button class="addBtn disable">Add</button>'
-            : '<button class="addBtn">Add</button>'
-        }
+    state.budgetRemain <= 0
+      ? '<button class="addBtn disable">Add</button>'
+      : '<button class="addBtn">Add</button>'
+    }
         ${
-          state.budgetRemain <= 0
-            ? '<p class="inform">Out of budget, cannot add anymore!!</p>'
-            : ""
-        }
+    state.budgetRemain <= 0
+      ? '<p class="inform">Out of budget, cannot add anymore!!</p>'
+      : ""
+    }
     </form>
 `;
 }
 // ------------------
 function renderExpenses(state) {
   let listExpense = state.expenses
-    .map(function(item) {
+    .map(function (item) {
       return `
             <li data-id="${item.expenseID}">
                 <span>${item.name} : ${formatCurrency(item.amount)} VND</span>
                 ${
-                  item.expenseType == "spendMoney"
-                    ? '<span class="red">&#8595</span>'
-                    : '<span class="green">&#8593</span>'
-                }
+        item.expenseType == "spendMoney"
+          ? '<span class="red">&#8595</span>'
+          : '<span class="green">&#8593</span>'
+        }
                 <span>${formatTime_HourMinuteSession(
-                  item.stampTimeExpense
-                )}</span>
+          item.stampTimeExpense
+        )}</span>
                 <span class="delete" delete-id="${item.expenseID}">X</span>
             </li>
         `;
@@ -114,7 +115,7 @@ function renderExpenses(state) {
 // -------------------------
 function bindEvent() {
   // ------------
-  document.querySelector("#amount").addEventListener("input", function() {
+  document.querySelector("#amount").addEventListener("input", function () {
     let amountInput = Number(
       document
         .querySelector("#amount")
@@ -128,7 +129,7 @@ function bindEvent() {
     document.querySelector("#amount").value = formatCurrency(amountInput);
   });
   // ----------------
-  document.querySelector(".addBtn").addEventListener("click", function(event) {
+  document.querySelector(".addBtn").addEventListener("click", function (event) {
     event.preventDefault();
     let expenseInput = document.querySelector("#expense").value;
     let amountInput = Number(
@@ -162,20 +163,28 @@ function bindEvent() {
     appState.expenses.push(newExpense);
     appState.budgetRemain = calculateBudgetRemain(appState);
     localStorage.setItem("EXPENSES", JSON.stringify(appState.expenses));
+    if (checkExpenseIndexInExpenseArr(expenseInput) == -1) {
+      let newExpenseWord = {
+        name: expenseInput,
+        wordID: id
+      }
+      expenseArr.push(newExpenseWord)
+      localStorage.setItem("EXPENSEWORDS", JSON.stringify(expenseArr))
+    }
     id++;
     renderHTML(appState);
     setFocustoTextBox();
   });
   // ------------
-  document.querySelector(".clearAll").addEventListener("click", function() {
+  document.querySelector(".clearAll").addEventListener("click", function () {
     localStorage.clear();
     location.reload();
   });
   // -------------
-  document.querySelectorAll(".delete").forEach(function(expense) {
-    expense.addEventListener("click", function() {
+  document.querySelectorAll(".delete").forEach(function (expense) {
+    expense.addEventListener("click", function () {
       let selectedItemID = expense.getAttribute("delete-id");
-      let expenseSelectedIndex = appState.expenses.findIndex(function(item) {
+      let expenseSelectedIndex = appState.expenses.findIndex(function (item) {
         return item.expenseID == selectedItemID;
       });
       appState.expenses.splice(expenseSelectedIndex, 1);
@@ -187,7 +196,7 @@ function bindEvent() {
 }
 // --------------------------
 function calculateBudgetRemain(state) {
-  let totalExpenses = state.expenses.reduce(function(sum, item) {
+  let totalExpenses = state.expenses.reduce(function (sum, item) {
     return (sum = sum + item.amount);
   }, 0);
   return state.budget + totalExpenses;
@@ -260,7 +269,7 @@ function formatCurrency(numberInput, location) {
     .split("")
     .reverse();
   let reverseNewNumberStr = "";
-  reverseNumberInputArr.forEach(function(item, index) {
+  reverseNumberInputArr.forEach(function (item, index) {
     reverseNewNumberStr = reverseNewNumberStr + item;
     if ((index + 1) % 3 === 0) {
       reverseNewNumberStr = reverseNewNumberStr + ",";

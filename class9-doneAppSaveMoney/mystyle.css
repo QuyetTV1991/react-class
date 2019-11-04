@@ -99,3 +99,16 @@ select {
   margin: 10px 0;
   padding: 0 0 0 10px;
 }
+.suggestions {
+  width: 100%;
+  background-color: #fff; 
+}
+.suggestions > div {
+  cursor: pointer;
+  margin: 10px 0px;
+  max-height: 100px;
+  min-height: 20px;
+}
+.suggestions > div:hover {
+  background-color: #ff4500;
+}
