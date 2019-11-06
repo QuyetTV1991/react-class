@@ -1,203 +1,35 @@
 const renderSection = state => {
-  return `
+    return `
   <section class="col-12 col-md-8 col-lg-9">
     <span class="border p-4 text-muted">
         SHOWING 1-22 OF 32 RESULTS
     </span>
-    <div class="row my-5">    
-    <div class="col-12 col-md-6 col-lg-4">
-      <div class="gallery product">
-        <span class="badge"></span>
-        <a target="_blank" href="./detail-page.html">
-            <img src="./asset/images/pro1.jpg" alt="Anh Quang Cao 1">
-        </a>
-        <div class="desc">
-            <h4 class="small text-danger text-left">FUNITURE</h4>
-            <h4 class="font-weight-bold text-dark text-left">Minimal Deco Furniture</h4>
-            <div class="d-flex justify-content-start">
-                <h6 class="font-weight-bolder text-secondary pr-5">$119.00 USD</h6>
-                <h6 class="font-weight-bolder strike">$230.00 USD</h6>
+    <div class="row my-5">
+    ${state.products.map(product => {
+        return `
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="gallery product">
+                <span class="badge">${product.isSale === true ? 'SALE' : ''}</span>
+                <a data-page="detail" data-productID="${product.productID}">
+                    <img src=${product.productImg} alt="Anh Quang Cao ${product.productID}">
+                </a>
+                <div class="desc">
+                    <h4 class="small text-danger text-left">${product.catogery.toUpperCase()}</h4>
+                    <h4 class="font-weight-bold text-dark text-left">${product.productName}</h4>
+                    <div class="d-flex justify-content-start">
+                        <h6 class="font-weight-bolder text-secondary pr-5">${product.productNewPrice}</h6>
+                        <h6 class="font-weight-bolder strike">${product.productOldPrice}</h6>
+                        <button class="add-to-cart" data-btnId ="${product.productID}">Add to Cart
+                            <i class="fas fa-cart-arrow-down"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
-      </div>
-  </div>
-  <div class="col-12 col-md-6 col-lg-4">
-      <div class="gallery product">
-          <span class="badge">SALE</span>
-          <a target="_blank" href="./detail-page.html">
-              <img src="./asset/images/pro2.jpg" alt="Anh Quang Cao 2">
-          </a>
-          <div class="desc">
-              <h4 class="small text-danger text-left">FUNITURE</h4>
-              <h4 class="font-weight-bold text-dark text-left">Minimal Deco Furniture</h4>
-              <div class="d-flex justify-content-start">
-                  <h6 class="font-weight-bolder text-secondary pr-5">$119.00 USD</h6>
-                  <h6 class="font-weight-bolder strike">$230.00 USD</h6>
-              </div>
-          </div>
-      </div>
-  </div>
-  <div class="col-12 col-md-6 col-lg-4">
-      <div class="gallery product">
-          <span class="badge"></span>
-          <a target="_blank" href="./detail-page.html">
-              <img src="./asset/images/pro3.jpg" alt="Anh Quang Cao 3">
-          </a>
-          <div class="desc">
-              <h4 class="small text-danger text-left">FUNITURE</h4>
-              <h4 class="font-weight-bold text-dark text-left">Minimal Deco Furniture</h4>
-              <div class="d-flex justify-content-start">
-                  <h6 class="font-weight-bolder text-secondary pr-5">$119.00 USD</h6>
-                  <h6 class="font-weight-bolder strike">$230.00 USD</h6>
-              </div>
-          </div>
-      </div>
-  </div>
-  <div class="col-12 col-md-6 col-lg-4">
-      <div class="gallery product">
-          <span class="badge"></span>
-          <a target="_blank" href="./detail-page.html">
-              <img src="./asset/images/pro4.jpg" alt="Anh Quang Cao 4">
-          </a>
-          <div class="desc">
-              <h4 class="small text-danger text-left">FUNITURE</h4>
-              <h4 class="font-weight-bold text-dark text-left">Minimal Deco Furniture</h4>
-              <div class="d-flex justify-content-start">
-                  <h6 class="font-weight-bolder text-secondary pr-5">$119.00 USD</h6>
-                  <h6 class="font-weight-bolder strike">$230.00 USD</h6>
-              </div>
-          </div>
-      </div>
-  </div>
-  <div class="col-12 col-md-6 col-lg-4">
-      <div class="gallery product">
-          <span class="badge"></span>
-          <a target="_blank" href="./detail-page.html">
-              <img src="./asset/images/pro5.jpg" alt="Anh Quang Cao 5">
-          </a>
-          <div class="desc">
-              <h4 class="small text-danger text-left">FUNITURE</h4>
-              <h4 class="font-weight-bold text-dark text-left">Minimal Deco Furniture</h4>
-              <div class="d-flex justify-content-start">
-                  <h6 class="font-weight-bolder text-secondary pr-5">$119.00 USD</h6>
-                  <h6 class="font-weight-bolder strike">$230.00 USD</h6>
-              </div>
-          </div>
-      </div>
-  </div>
-  <div class="col-12 col-md-6 col-lg-4">
-      <div class="gallery product">
-          <span class="badge"></span>
-          <a target="_blank" href="./detail-page.html">
-              <img src="./asset/images/pro6.jpg" alt="Anh Quang Cao 6">
-          </a>
-          <div class="desc">
-              <h4 class="small text-danger text-left">FUNITURE</h4>
-              <h4 class="font-weight-bold text-dark text-left">Minimal Deco Furniture</h4>
-              <div class="d-flex justify-content-start">
-                  <h6 class="font-weight-bolder text-secondary pr-5">$119.00 USD</h6>
-                  <h6 class="font-weight-bolder strike">$230.00 USD</h6>
-              </div>
-          </div>
-      </div>
-  </div>
-  <div class="col-12 col-md-6 col-lg-4">
-      <div class="gallery product">
-          <span class="badge"></span>
-          <a target="_blank" href="./detail-page.html">
-              <img src="./asset/images/pro7.jpg" alt="Anh Quang Cao 7">
-          </a>
-          <div class="desc">
-              <h4 class="small text-danger text-left">FUNITURE</h4>
-              <h4 class="font-weight-bold text-dark text-left">Minimal Deco Furniture</h4>
-              <div class="d-flex justify-content-start">
-                  <h6 class="font-weight-bolder text-secondary pr-5">$119.00 USD</h6>
-                  <h6 class="font-weight-bolder strike">$230.00 USD</h6>
-              </div>
-          </div>
-      </div>
-  </div>
-  <div class="col-12 col-md-6 col-lg-4">
-      <div class="gallery product">
-          <span class="badge">SALE</span>
-          <a target="_blank" href="./detail-page.html">
-              <img src="./asset/images/pro8.jpg" alt="Anh Quang Cao 8">
-          </a>
-          <div class="desc">
-              <h4 class="small text-danger text-left">FUNITURE</h4>
-              <h4 class="font-weight-bold text-dark text-left">Minimal Deco Furniture</h4>
-              <div class="d-flex justify-content-start">
-                  <h6 class="font-weight-bolder text-secondary pr-5">$119.00 USD</h6>
-                  <h6 class="font-weight-bolder strike">$230.00 USD</h6>
-              </div>
-          </div>
-      </div>
-  </div>
-  <div class="col-12 col-md-6 col-lg-4">
-      <div class="gallery product">
-          <span class="badge"></span>
-          <a target="_blank" href="./detail-page.html">
-              <img src="./asset/images/pro9.jpg" alt="Anh Quang Cao 9">
-          </a>
-          <div class="desc">
-              <h4 class="small text-danger text-left">FUNITURE</h4>
-              <h4 class="font-weight-bold text-dark text-left">Minimal Deco Furniture</h4>
-              <div class="d-flex justify-content-start">
-                  <h6 class="font-weight-bolder text-secondary pr-5">$119.00 USD</h6>
-                  <h6 class="font-weight-bolder strike">$230.00 USD</h6>
-              </div>
-          </div>
-      </div>
-  </div>
-  <div class="col-12 col-md-6 col-lg-4">
-      <div class="gallery product">
-          <span class="badge"></span>
-          <a target="_blank" href="./detail-page.html">
-              <img src="./asset/images/pro10.jpg" alt="Anh Quang Cao 10">
-          </a>
-          <div class="desc">
-              <h4 class="small text-danger text-left">FUNITURE</h4>
-              <h4 class="font-weight-bold text-dark text-left">Minimal Deco Furniture</h4>
-              <div class="d-flex justify-content-start">
-                  <h6 class="font-weight-bolder text-secondary pr-5">$119.00 USD</h6>
-                  <h6 class="font-weight-bolder strike">$230.00 USD</h6>
-              </div>
-          </div>
-      </div>
-  </div>
-  <div class="col-12 col-md-6 col-lg-4">
-      <div class="gallery product">
-          <span class="badge"></span>                        
-          <a target="_blank" href="./detail-page.html">
-              <img src="./asset/images/pro11.jpg" alt="Anh Quang Cao 11">
-          </a>
-          <div class="desc">
-              <h4 class="small text-danger text-left">FUNITURE</h4>
-              <h4 class="font-weight-bold text-dark text-left">Minimal Deco Furniture</h4>
-              <div class="d-flex justify-content-start">
-                  <h6 class="font-weight-bolder text-secondary pr-5">$119.00 USD</h6>
-                  <h6 class="font-weight-bolder strike">$230.00 USD</h6>
-              </div>
-          </div>
-      </div>
-  </div>
-  <div class="col-12 col-md-6 col-lg-4">
-      <div class="gallery product">
-          <span class="badge">SALE</span>
-          <a target="_blank" href="./detail-page.html">
-              <img src="./asset/images/pro12.jpg" alt="Anh Quang Cao 12">
-          </a>
-          <div class="desc">
-              <h4 class="small text-danger text-left">FUNITURE</h4>
-              <h4 class="font-weight-bold text-dark text-left">Minimal Deco Furniture</h4>
-              <div class="d-flex justify-content-start">
-                  <h6 class="font-weight-bolder text-secondary pr-5">$119.00 USD</h6>
-                  <h6 class="font-weight-bolder strike">$230.00 USD</h6>
-              </div>
-          </div>
-      </div>
-  </div>
-</div>
+        `
+    }).join('')
+        }    
+    </div>
   </section>
     `;
 };

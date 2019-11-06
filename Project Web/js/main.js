@@ -1,5 +1,5 @@
 const appState = {
-  activePage: "home",
+  activePage: "checkout",
   products: [
     {
       productID: "1",
@@ -8,7 +8,7 @@ const appState = {
       productName: "Minimal Deco Furniture",
       productOldPrice: "$230.00 USD",
       productNewPrice: "$119.00 USD",
-      isSale: true
+      isSale: false
     },
     {
       productID: "2",
@@ -26,7 +26,7 @@ const appState = {
       productName: "Minimal Deco Furniture",
       productOldPrice: "$230.00 USD",
       productNewPrice: "$119.00 USD",
-      isSale: true
+      isSale: false
     },
     {
       productID: "4",
@@ -35,7 +35,7 @@ const appState = {
       productName: "Minimal Deco Furniture",
       productOldPrice: "$230.00 USD",
       productNewPrice: "$119.00 USD",
-      isSale: true
+      isSale: false
     },
     {
       productID: "5",
@@ -44,7 +44,7 @@ const appState = {
       productName: "Minimal Deco Furniture",
       productOldPrice: "$230.00 USD",
       productNewPrice: "$119.00 USD",
-      isSale: true
+      isSale: false
     },
     {
       productID: "6",
@@ -53,7 +53,7 @@ const appState = {
       productName: "Minimal Deco Furniture",
       productOldPrice: "$230.00 USD",
       productNewPrice: "$119.00 USD",
-      isSale: true
+      isSale: false
     },
     {
       productID: "7",
@@ -62,7 +62,7 @@ const appState = {
       productName: "Minimal Deco Furniture",
       productOldPrice: "$230.00 USD",
       productNewPrice: "$119.00 USD",
-      isSale: true
+      isSale: false
     },
     {
       productID: "8",
@@ -80,7 +80,7 @@ const appState = {
       productName: "Minimal Deco Furniture",
       productOldPrice: "$230.00 USD",
       productNewPrice: "$119.00 USD",
-      isSale: true
+      isSale: false
     },
     {
       productID: "10",
@@ -89,7 +89,7 @@ const appState = {
       productName: "Minimal Deco Furniture",
       productOldPrice: "$230.00 USD",
       productNewPrice: "$119.00 USD",
-      isSale: true
+      isSale: false
     },
     {
       productID: "11",
@@ -98,7 +98,7 @@ const appState = {
       productName: "Minimal Deco Furniture",
       productOldPrice: "$230.00 USD",
       productNewPrice: "$119.00 USD",
-      isSale: true
+      isSale: false
     },
     {
       productID: "12",
@@ -110,7 +110,21 @@ const appState = {
       isSale: true
     }
   ],
-  shoppingCart: []
+  shoppingCart: [
+    {
+      img: "./asset/images/pro1.jpg",
+      name: "Minimal Deco Furniture",
+      price: "$119.00 USD",
+      quantity: 1
+    },
+    {
+      img: "./asset/images/pro2.jpg",
+      name: "Minimal Deco Furniture",
+      price: "$119.00 USD",
+      quantity: 12
+    }
+  ],
+  CartAmount: 0
 };
 
 const renderHTML = state => {
@@ -121,9 +135,17 @@ const renderHTML = state => {
         ${renderFooter(state)}
     `;
   body.innerHTML = template;
-  //   bindEvents();
+  bindEvents();
 };
 
+const bindEvents = () => {
+  const navItemLinks = document.querySelectorAll('.nav-item-link');
+  navItemLinks.forEach(itemLink => {
+    itemLink.addEventListener('click', () => {
+      const datapage = itemLink.getAttribute('data-page')
+      appState.activePage = datapage
+      renderHTML(appState)
+    })
+  })
+};
 renderHTML(appState);
-
-// const bindEvents = () => {};

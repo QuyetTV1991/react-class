@@ -1,6 +1,6 @@
 const renderContent = state => {
   const { activePage } = state;
-  const pageMappers = {
+  let pageMappers = {
     home: renderHomePage,
     checkout: renderCheckoutPage,
     detail: renderDetailPage,
