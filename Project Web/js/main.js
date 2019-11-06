@@ -1,5 +1,5 @@
 const appState = {
-  activePage: "detail",
+  activePage: "home",
   products: [
     {
       productID: "1",
