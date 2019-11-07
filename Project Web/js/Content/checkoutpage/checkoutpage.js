@@ -51,46 +51,55 @@ const renderCheckoutPage = state => {
 
 const renderListCart = state => {
   return `
-    ${state.shoppingCart.map(cartItem => {
-    return `
+    ${state.shoppingCart
+      .map(cartItem => {
+        return `
         <tr>
           <td><img src=${cartItem.img} class="image-table"></td>
           <td>${cartItem.name}</td>
           <td>${cartItem.price}</td>
           <td>
             <span class="but-oval bg-pink">
-              <button data-ID="${cartItem.id}" data-btn="minus" class="but-square rounded-circle border-0 bg-light buttonCheckout">
+              <button data-ID="${
+                cartItem.id
+              }" data-btn="minus" class="but-square rounded-circle border-0 bg-light buttonCheckout">
                 -
               </button>
-              <span class="px-5">${cartItem.quantity}</span>
-              <button data-ID="${cartItem.id}" data-btn="plus" class="but-square rounded-circle border-0 bg-light buttonCheckout">
+              <input type="text" data-ID="${
+                cartItem.id
+              }" class="cart-item" value="${cartItem.quantity}">
+              <button data-ID="${
+                cartItem.id
+              }" data-btn="plus" class="but-square rounded-circle border-0 bg-light buttonCheckout">
                 +
               </button>
             </span>
           </td>
-          <td>$${cartItem.price.slice(1, cartItem.price.length - 3) * cartItem.quantity}.00 USD</td>
-          <td>X</td>
+          <td>$${cartItem.price.slice(1, cartItem.price.length - 3) *
+            cartItem.quantity}.00 USD</td>
+          <td>
+          <button data-ID="${
+            cartItem.id
+          }" class="but-square rounded-circle border-0 bg-light removeItem">X</button>
+          </td>
         </tr>
-      `
-  }).join('')}
-  `
-}
+      `;
+      })
+      .join("")}
+  `;
+};
 
 const renderCartTotal = state => {
-  let total = state.shoppingCart.reduce(function (total, cartItem) {
-    total = total + cartItem.quantity * cartItem.price.slice(1, cartItem.price.length - 3)
-    return total
-  }, 0)
   return `
     <tr>
       <td>Subtotal</td>
-      <td>$${total}.00 USD
+      <td>$${state.totalCart}.00 USD
       </td>
     </tr>
     <tr>
       <td>Total</td>
-      <td>$${total * state.coupon} USD
+      <td>$${state.totalCart * state.coupon} USD
       </td>
     </tr>
-  `
-}
+  `;
+};

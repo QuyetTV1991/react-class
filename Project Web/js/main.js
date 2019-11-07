@@ -110,14 +110,14 @@ const appState = {
       isSale: true
     }
   ],
-  shoppingCart: [
-  ],
+  shoppingCart: [],
   cartAmount: 0,
   coupon: 1,
   couponTable: {
     FUR80: 0.8,
     FUR60: 0.6
-  }
+  },
+  totalCart: 0
 };
 
 const renderHTML = state => {
@@ -133,29 +133,28 @@ const renderHTML = state => {
 
 const bindEvents = () => {
   // event switch pages
-  const navItemLinks = document.querySelectorAll('.nav-item-link');
+  const navItemLinks = document.querySelectorAll(".nav-item-link");
   navItemLinks.forEach(itemLink => {
-    itemLink.addEventListener('click', () => {
-      const datapage = itemLink.getAttribute('data-page')
-      appState.activePage = datapage
-      renderHTML(appState)
-    })
-  })
+    itemLink.addEventListener("click", () => {
+      const datapage = itemLink.getAttribute("data-page");
+      appState.activePage = datapage;
+      renderHTML(appState);
+    });
+  });
   // event add to cart
-  const add2CartBtn = document.querySelectorAll('.add-to-cart');
+  const add2CartBtn = document.querySelectorAll(".add-to-cart");
   add2CartBtn.forEach(cartBtn => {
-    cartBtn.addEventListener('click', () => {
-      const btnID = cartBtn.getAttribute('data-btnid')
-      let productSelected = appState.products.find(function (product) {
-        return product.productID == btnID
-      })
-      let itemisInShoppingCart = appState.shoppingCart.find(function (item) {
-        return item.id == btnID
-      })
+    cartBtn.addEventListener("click", () => {
+      const btnID = cartBtn.getAttribute("data-btnid");
+      let productSelected = appState.products.find(function(product) {
+        return product.productID == btnID;
+      });
+      let itemisInShoppingCart = appState.shoppingCart.find(function(item) {
+        return item.id == btnID;
+      });
       if (itemisInShoppingCart !== undefined) {
-        itemisInShoppingCart.quantity += 1
-      }
-      else {
+        itemisInShoppingCart.quantity += 1;
+      } else {
         let newCartItem = {
           id: productSelected.productID,
           img: productSelected.productImg,
@@ -163,27 +162,97 @@ const bindEvents = () => {
           name: productSelected.productName,
           price: productSelected.productNewPrice,
           quantity: 1
-        }
-        appState.shoppingCart.push(newCartItem)
+        };
+        appState.shoppingCart.push(newCartItem);
       }
-      appState.cartAmount = appState.shoppingCart.reduce(function (sum, item) {
-        sum = sum + item.quantity
-        return sum
-      }, 0)
-      renderHTML(appState)
-    })
-  })
+      appState.cartAmount = calculateCartAmount(appState);
+      renderHTML(appState);
+    });
+  });
   // button checkout page
-  document.querySelectorAll('.buttonCheckout').forEach(button => {
-    button.addEventListener('click', () => {
-      let dataBtn = button.getAttribute('data-btn')
-      if (dataBtn == 'applyCoupon') {
-        let coupon = document.querySelector('#coupon-input').value;
-        appState.coupon = appState.couponTable[coupon]
-        renderHTML(appState)
+  document.querySelectorAll(".buttonCheckout").forEach(button => {
+    button.addEventListener("click", () => {
+      let dataBtn = button.getAttribute("data-btn");
+      if (dataBtn == "applyCoupon") {
+        let coupon = document.querySelector("#coupon-input").value;
+        appState.coupon = appState.couponTable[coupon];
+        renderHTML(appState);
+      } else if (dataBtn == "updateCart") {
+        appState.totalCart = appState.shoppingCart.reduce(function(sum, item) {
+          sum =
+            sum + item.quantity * item.price.slice(1, item.price.length - 3);
+          return sum;
+        }, 0);
+        renderHTML(appState);
+      } else if (dataBtn == "processCart") {
+        alert("Your order process complete! Thank you");
+        appState.shoppingCart = [];
+        appState.coupon = 1;
+        appState.totalCart = 0;
+        renderHTML(appState);
+      } else if (dataBtn == "minus" || dataBtn == "plus") {
+        let itemID = button.getAttribute("data-id");
+        let itemSelected = appState.shoppingCart.find(function(item) {
+          return item.id == itemID;
+        });
+        if (dataBtn == "minus") {
+          itemSelected.quantity = Number(itemSelected.quantity) - 1;
+          appState.cartAmount = calculateCartAmount(appState);
+          renderHTML(appState);
+          if (itemSelected.quantity == 0) {
+            removeItem(itemSelected.id);
+          }
+        }
+        if (dataBtn == "plus") {
+          itemSelected.quantity = Number(itemSelected.quantity) + 1;
+          appState.cartAmount = calculateCartAmount(appState);
+          renderHTML(appState);
+        }
       }
-      // else if (dataBtn == 'updateCart')
-    })
-  })
+    });
+  });
+  // change value at item cart quantity
+  document.querySelectorAll(".cart-item").forEach(item => {
+    item.addEventListener("change", () => {
+      let itemId = item.getAttribute("data-id");
+      let itemSelected = appState.shoppingCart.find(function(item) {
+        return item.id == itemId;
+      });
+      itemSelected.quantity = item.value;
+      appState.cartAmount = calculateCartAmount(appState);
+      renderHTML(appState);
+      if (itemSelected.quantity == 0) {
+        removeItem(itemSelected.id);
+      }
+    });
+  });
+  // event click button remove
+  document.querySelectorAll(".removeItem").forEach(removeItem => {
+    removeItem.addEventListener("click", () => {
+      let removeId = removeItem.getAttribute("data-id");
+      let itemRemoveIndex = appState.shoppingCart.findIndex(function(item) {
+        return item.id == removeId;
+      });
+      appState.shoppingCart.splice(itemRemoveIndex, 1);
+      appState.cartAmount = calculateCartAmount(appState);
+      renderHTML(appState);
+    });
+  });
+  // remove Cart Item
+  const removeItem = itemid => {
+    let itemRemoveIndex = appState.shoppingCart.findIndex(function(item) {
+      return item.id == itemid;
+    });
+    appState.shoppingCart.splice(itemRemoveIndex, 1);
+    appState.cartAmount = calculateCartAmount(appState);
+    renderHTML(appState);
+  };
+  const calculateCartAmount = appState => {
+    let cartAmount = appState.shoppingCart.reduce(function(sum, item) {
+      sum = sum + item.quantity;
+      return sum;
+    }, 0);
+    return cartAmount;
+  };
 };
 renderHTML(appState);
