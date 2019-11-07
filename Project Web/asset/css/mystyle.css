@@ -313,6 +313,10 @@ h6 {
   text-align: center;
   height: 5rem;
 }
+.image-table {
+  max-width: 100px;
+  max-height: 100px;
+}
 .cart-total {
   width: 100%;
 }

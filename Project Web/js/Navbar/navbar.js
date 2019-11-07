@@ -35,7 +35,7 @@ const renderNavbar = state => {
             <a class="nav-item-link" data-page="checkout">
                 <span class="notification">
                     <i class="fas fa-shopping-cart fa-lg text-orange" aria-hidden="true"></i>
-                    <span class="badge bg-pink text-orange">${appState.CartAmount}</span>
+                    <span class="badge bg-pink text-orange">${appState.cartAmount}</span>
                 </span>
             </a>
             </span>
