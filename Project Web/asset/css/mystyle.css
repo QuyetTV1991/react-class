@@ -223,6 +223,7 @@ h6 {
 .notification,
 .product {
   position: relative;
+  cursor: pointer;
 }
 .notification .badge {
   position: absolute;

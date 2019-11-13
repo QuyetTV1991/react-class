@@ -1,5 +1,5 @@
 const appState = {
-  activePage: "home",
+  activePage: "detail",
   products: [
     {
       productID: 1,
@@ -117,7 +117,19 @@ const appState = {
     FUR80: 0.8,
     FUR60: 0.6
   },
-  totalCart: 0
+  totalCart: 0,
+  productDetail: {
+    images: "./asset/images/pro1.jpg",
+    catogery: "Decor. Funiture",
+    name: "Limonda Women Winter Cloth",
+    newPrice: "$119.00",
+    oldPrice: "$246.00",
+    desc: "Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.",
+    brand: "Hewlett-Packard",
+    productCode: "d12",
+    rewardPoint: "100",
+    isInStock: true
+  }
 };
 
 const renderHTML = state => {
@@ -146,10 +158,10 @@ const bindEvents = () => {
   add2CartBtn.forEach(cartBtn => {
     cartBtn.addEventListener("click", () => {
       const btnID = cartBtn.getAttribute("data-btnid");
-      let productSelected = appState.products.find(function(product) {
+      let productSelected = appState.products.find(function (product) {
         return product.productID == btnID;
       });
-      let itemisInShoppingCart = appState.shoppingCart.find(function(item) {
+      let itemisInShoppingCart = appState.shoppingCart.find(function (item) {
         return item.id == btnID;
       });
       if (itemisInShoppingCart !== undefined) {
@@ -178,7 +190,7 @@ const bindEvents = () => {
         appState.coupon = appState.couponTable[coupon];
         renderHTML(appState);
       } else if (dataBtn == "updateCart") {
-        appState.totalCart = appState.shoppingCart.reduce(function(sum, item) {
+        appState.totalCart = appState.shoppingCart.reduce(function (sum, item) {
           sum =
             sum + item.quantity * item.price.slice(1, item.price.length - 3);
           return sum;
@@ -189,10 +201,11 @@ const bindEvents = () => {
         appState.shoppingCart = [];
         appState.coupon = 1;
         appState.totalCart = 0;
+        appState.cartAmount = 0;
         renderHTML(appState);
       } else if (dataBtn == "minus" || dataBtn == "plus") {
         let itemID = button.getAttribute("data-id");
-        let itemSelected = appState.shoppingCart.find(function(item) {
+        let itemSelected = appState.shoppingCart.find(function (item) {
           return item.id == itemID;
         });
         if (dataBtn == "minus") {
@@ -215,7 +228,7 @@ const bindEvents = () => {
   document.querySelectorAll(".cart-item").forEach(item => {
     item.addEventListener("change", () => {
       let itemId = item.getAttribute("data-id");
-      let itemSelected = appState.shoppingCart.find(function(item) {
+      let itemSelected = appState.shoppingCart.find(function (item) {
         return item.id == itemId;
       });
       itemSelected.quantity = item.value;
@@ -230,7 +243,7 @@ const bindEvents = () => {
   document.querySelectorAll(".removeItem").forEach(removeItem => {
     removeItem.addEventListener("click", () => {
       let removeId = removeItem.getAttribute("data-id");
-      let itemRemoveIndex = appState.shoppingCart.findIndex(function(item) {
+      let itemRemoveIndex = appState.shoppingCart.findIndex(function (item) {
         return item.id == removeId;
       });
       appState.shoppingCart.splice(itemRemoveIndex, 1);
@@ -240,7 +253,7 @@ const bindEvents = () => {
   });
   // remove Cart Item
   const removeItem = itemid => {
-    let itemRemoveIndex = appState.shoppingCart.findIndex(function(item) {
+    let itemRemoveIndex = appState.shoppingCart.findIndex(function (item) {
       return item.id == itemid;
     });
     appState.shoppingCart.splice(itemRemoveIndex, 1);
@@ -248,7 +261,7 @@ const bindEvents = () => {
     renderHTML(appState);
   };
   const calculateCartAmount = appState => {
-    let cartAmount = appState.shoppingCart.reduce(function(sum, item) {
+    let cartAmount = appState.shoppingCart.reduce(function (sum, item) {
       sum = sum + item.quantity;
       return sum;
     }, 0);
